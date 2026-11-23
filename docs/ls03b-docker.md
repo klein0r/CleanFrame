@@ -147,6 +147,16 @@ Read-only `inspect` and `query` confirmed, before any write:
   Home app id (`com.samsung.tv.csfs`); autostart `1`;
   `util_is_appbooting_supported_webapp_byappid` returned `1` for the launcher.
 
+The captured baseline looked like this on this TV:
+
+```json
+{"Home":"com.samsung.tv.csfs","Strings":{"db/appfw/home_appid":"com.samsung.tv.csfs","db/appfw/startup_appid":"com.samsung.tv.csfs","db/appfw/booting_appid_backup":"com.samsung.tv.csfs","db/first_screen/type":"com.samsung.tv.csfs"},"Autostart":1,"Uid":901,"BootSupported":1}
+```
+
+**Do not reuse these values.** This is one TV's baseline. Run your own `query`
+and keep your own snapshot: another region, Home screen or firmware has different
+values, and a `restore` with the wrong baseline can break the Home assignment.
+
 Because the originals are real, non-empty values, `restore` is exact. The verified
 sequence `query → apply → restore → apply` ran clean:
 
