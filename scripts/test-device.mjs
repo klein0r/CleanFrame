@@ -51,7 +51,7 @@ test('catalogue timeout and late callbacks finish only once', () => {
   assert.equal(results.length, 0);
   h.advance(1);
   assert.equal(results.length, 1);
-  assert.match(results[0].error.message, /did not respond/);
+  assert.match(results[0].error.message, /nicht reagiert/);
   h.requests[0].ok([]);
   h.requests[0].fail({ message: 'Late failure' });
   assert.equal(results.length, 1);
@@ -81,7 +81,7 @@ test('launch keeps its eight-second deadline independently of discovery', () => 
   h.device.launchApp('Synthetic.App', error => results.push(error));
   h.advance(8000);
   assert.equal(results.length, 1);
-  assert.match(results[0].message, /did not respond/);
+  assert.match(results[0].message, /nicht reagiert/);
   h.launches[0].ok();
   assert.equal(results.length, 1);
 });

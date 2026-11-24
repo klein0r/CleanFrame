@@ -27,13 +27,13 @@
     catch (err) { return SELF; }
   }
   function unavailable(done) {
-    done({ message: 'Open CleanFrame on the TV to use this control.', detail: 'The web preview cannot control the TV.' });
+    done({ message: 'CleanFrame auf dem Fernseher öffnen, um diese Funktion zu nutzen.', detail: 'Die Web-Vorschau kann den Fernseher nicht steuern.' });
   }
   function failure(err) {
-    return { message: 'The TV could not open this screen.', detail: err && (err.message || err.name) || 'Try again, or press the remote’s Home button to return to CleanFrame.' };
+    return { message: 'Der Fernseher konnte diese Ansicht nicht öffnen.', detail: err && (err.message || err.name) || 'Erneut versuchen oder mit der Home-Taste der Fernbedienung zu CleanFrame zurückkehren.' };
   }
   function bounded(done, timeout) {
-    var finished = false, timer = setTimeout(function () { finish({ message: 'The TV did not respond. Please try again.' }); }, timeout || 8000);
+    var finished = false, timer = setTimeout(function () { finish({ message: 'Der Fernseher hat nicht reagiert. Bitte erneut versuchen.' }); }, timeout || 8000);
     function finish(err, value) { if (finished) return; finished = true; clearTimeout(timer); done(err, value); }
     return finish;
   }
@@ -66,32 +66,32 @@
   function setSource(port, done) {
     cancelSource();
     var tvw = window.tizen && window.tizen.tvwindow, app = api(), finished = false;
-    if (typeof port !== 'number' || !isFinite(port) || port < 0 || Math.floor(port) !== port) { done({ message: 'This HDMI input is not available.' }); return; }
+    if (typeof port !== 'number' || !isFinite(port) || port < 0 || Math.floor(port) !== port) { done({ message: 'Dieser HDMI-Eingang ist nicht verfügbar.' }); return; }
     if (!tvw || typeof tvw.setSource !== 'function' || !app || typeof app.launch !== 'function') { unavailable(done); return; }
-    var timer = setTimeout(function () { finish({ message: 'The TV did not respond. Please try again.' }); }, 8000);
+    var timer = setTimeout(function () { finish({ message: 'Der Fernseher hat nicht reagiert. Bitte erneut versuchen.' }); }, 8000);
     function finish(err, value) {
       if (finished) return;
       finished = true; clearTimeout(timer);
       if (sourceCancel === cancel) sourceCancel = null;
       done(err, value);
     }
-    function cancel() { finish({ message: 'Input change cancelled.', cancelled: true }); }
+    function cancel() { finish({ message: 'Eingangswechsel abgebrochen.', cancelled: true }); }
     sourceCancel = cancel;
     sources(function (err, list) {
       if (finished) return;
       if (err) { finish(err); return; }
       var input = null;
       list.some(function (item) { if (item.number === port) { input = item; return true; } return false; });
-      if (!input) { finish({ message: 'This HDMI input is no longer available.' }); return; }
+      if (!input) { finish({ message: 'Dieser HDMI-Eingang ist nicht mehr verfügbar.' }); return; }
       try {
         tvw.setSource(input.source, function (selected) {
           if (finished) return;
-          if (selected && (selected.type !== 'HDMI' || selected.number !== port)) { finish({ message: 'The TV selected a different input. Please try again.' }); return; }
+          if (selected && (selected.type !== 'HDMI' || selected.number !== port)) { finish({ message: 'Der Fernseher hat einen anderen Eingang gewählt. Bitte erneut versuchen.' }); return; }
           try {
             app.launch('org.tizen.tv-viewer', function () { finish(null, input); }, function () {
-              finish({ message: 'The input was selected, but the TV viewer could not open.', detail: 'Use the remote’s Source control to view the input.' });
+              finish({ message: 'Der Eingang wurde gewählt, aber die TV-Ansicht ließ sich nicht öffnen.', detail: 'Den Eingang über die Source-Taste der Fernbedienung anzeigen.' });
             });
-          } catch (error) { finish({ message: 'The input was selected, but the TV viewer could not open.' }); }
+          } catch (error) { finish({ message: 'Der Eingang wurde gewählt, aber die TV-Ansicht ließ sich nicht öffnen.' }); }
         }, function (error) { if (!finished) finish(failure(error)); });
       } catch (error) { finish(failure(error)); }
     });
@@ -103,7 +103,7 @@
     catch (err) { finish(failure(err)); }
   }
   function launch(brand, done) {
-    if (!IDS[brand]) { done({message: 'This app has no launch target.'}); return; }
+    if (!IDS[brand]) { done({message: 'Für diese App ist kein Startziel hinterlegt.'}); return; }
     launchApp(IDS[brand], done);
   }
   function art(done) {
