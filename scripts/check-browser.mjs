@@ -129,6 +129,10 @@ async function page(options = {}, setup) {
     else if (failure.error !== 'net::ERR_ABORTED') report.pageErrors.push(failure);
   });
   await current.addInitScript(installHarness, { mock: true, catalog: CATALOG, minuteMs: 60000, seed: baseline(), ...options });
+  // Weather never reaches the real service in checks: a fixed reply, or a failure when asked for.
+  if (options.weather === 'fail') expected.push('api.open-meteo.com');
+  await current.route('https://api.open-meteo.com/**', route => options.weather === 'fail' ? route.abort('failed')
+    : route.fulfill({ status: 200, headers: { 'access-control-allow-origin': '*' }, contentType: 'application/json', body: JSON.stringify({ current: { temperature_2m: 7.4, weather_code: 3, is_day: 1 } }) }));
   if (setup) await setup(current);
   await current.goto(preview.baseURL + '/home/', { waitUntil: options.settleNetwork === false ? 'domcontentloaded' : 'load' });
   if (options.waitReady !== false) await ready();
@@ -1072,6 +1076,20 @@ try {
     check('Live 24-hour clock has no AM/PM', /^\s*\d{2}:\d{2}\s*$/.test(clock), clock);
     const date = await current.locator('#caption .clock-date').textContent();
     check('Clock shows the German weekday, day and month below', /^(Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag), \d{1,2}\. (Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)$/.test(date), date);
+  });
+  await run('Weather under the date', async () => {
+    await page();
+    await current.waitForSelector('#caption .clock-weather');
+    check('Weather has its own line under the date with icon, temperature and place', await current.evaluate(() => {
+      const w = document.querySelector('#caption .clock-weather');
+      return w.previousElementSibling.classList.contains('clock-date') && w.querySelector('.wx-temp').textContent === '7°'
+        && w.querySelector('.wx-place').textContent === 'Paderborn' && !!w.querySelector('svg.wx-icon path')
+        && w.getBoundingClientRect().top >= w.previousElementSibling.getBoundingClientRect().bottom;
+    }));
+    check('Weather reading is cached apart from the preferences', await current.evaluate(() => JSON.parse(localStorage.getItem('cleanframe.weather')).temp === 7));
+    await closePage(); await page({ weather: 'fail' });
+    await current.waitForTimeout(300);
+    check('Failed weather shows no weather line', !(await current.locator('#caption .clock-weather').count()));
   });
   await run('Open rotation and browser fallback', async () => {
     await page({ seed: baseline({ mode: 'open' }) }); check('Open mode advances at cold start', (await state()).wallpaper === walls[1].id);

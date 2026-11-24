@@ -5,7 +5,7 @@ export default [{
     ecmaVersion: 5,
     sourceType: 'script',
     globals: {
-      window: 'readonly', document: 'readonly', Image: 'readonly', localStorage: 'readonly',
+      window: 'readonly', document: 'readonly', Image: 'readonly', localStorage: 'readonly', XMLHttpRequest: 'readonly',
       setTimeout: 'readonly', clearTimeout: 'readonly', Promise: 'readonly',
       FrameDevice: 'readonly', tizen: 'readonly'
     }

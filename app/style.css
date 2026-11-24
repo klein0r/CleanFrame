@@ -38,7 +38,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 .caption{position:absolute;left:140px;top:72px;display:flex;flex-direction:column;max-width:1040px}
 .clock,.cap-title{font-size:48px;line-height:64px;font-weight:500;letter-spacing:-1.5px;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.22)}
 .clock{font-variant-numeric:tabular-nums}
-.clock-date{font-size:30px;line-height:40px;font-weight:500;letter-spacing:-.2px;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.clock-date,.clock-weather{font-size:30px;line-height:40px;font-weight:500;letter-spacing:-.2px;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.clock-weather{display:flex;align-items:center}
+.clock-weather .wx-icon{width:32px;height:32px;margin-right:10px;stroke-width:1.7}
+.clock-weather .wx-place{margin-left:14px;opacity:.72}
 .cap-line{max-width:100%;font-size:30px;line-height:40px;font-weight:500;letter-spacing:-.2px;color:rgba(255,255,255,.88);text-shadow:0 1px 2px rgba(0,0,0,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .warn{display:inline-flex;align-items:flex-start;color:var(--warn)}
 .warn .ico{width:30px;height:30px;margin-top:5px}
@@ -384,7 +387,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 .bg-dark.at-appearance .scene,.bg-light.at-appearance .scene{box-shadow:0 0 0 4px var(--line)}
 .l-list .caption{left:auto;right:140px;top:112px;align-items:flex-end;text-align:right;max-width:880px}
 .l-list.at-arrange .caption{top:72px}
-.bg-dark .clock,.bg-light .clock,.bg-dark .clock-date,.bg-light .clock-date{opacity:.72;text-shadow:none}
+.bg-dark .clock,.bg-light .clock,.bg-dark .clock-date,.bg-dark .clock-weather,.bg-light .clock-date,.bg-light .clock-weather{opacity:.72;text-shadow:none}
 .bg-dark .cap-title,.bg-light .cap-title,.bg-dark .cap-line,.bg-light .cap-line{color:var(--ink);text-shadow:none}
 .l-list .quiet-utils{right:122.1px;top:auto;bottom:112px;flex-direction:column;align-items:flex-end}
 .l-list .quiet-utils .u{flex:none}
@@ -444,9 +447,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 .ut-br{background:radial-gradient(ellipse 900px 260px at 1560px 878px,rgba(10,8,6,var(--br-a)),rgba(10,8,6,var(--br-b)) 55%,rgba(10,8,6,0))!important}
 .tr-dark .ut-tr,.br-dark .ut-br,.l-dock .ut-br{display:none}
 .bg-photo.l-list .caption{color:var(--tr-ink)}
-.bg-photo.l-list .caption .clock,.bg-photo.l-list .caption .clock-date,.bg-photo.l-list .caption .cap-title,.bg-photo.l-list .caption .cap-line{color:var(--tr-ink);text-shadow:var(--tr-shadow)}
-.bg-photo.l-list.has-clock-ink .caption .clock,.bg-photo.l-list.has-clock-ink .caption .clock-date{color:var(--clock-ink);opacity:1;text-shadow:none}
-.bg-photo.l-dock.has-dock-clock-ink .caption .clock,.bg-photo.l-dock.has-dock-clock-ink .caption .clock-date{color:var(--dock-clock-ink);opacity:1;text-shadow:none}
+.bg-photo.l-list .caption .clock,.bg-photo.l-list .caption .clock-date,.bg-photo.l-list .caption .clock-weather,.bg-photo.l-list .caption .cap-title,.bg-photo.l-list .caption .cap-line{color:var(--tr-ink);text-shadow:var(--tr-shadow)}
+.bg-photo.l-list.has-clock-ink .caption .clock,.bg-photo.l-list.has-clock-ink .caption .clock-date,.bg-photo.l-list.has-clock-ink .caption .clock-weather{color:var(--clock-ink);opacity:1;text-shadow:none}
+.bg-photo.l-dock.has-dock-clock-ink .caption .clock,.bg-photo.l-dock.has-dock-clock-ink .caption .clock-date,.bg-photo.l-dock.has-dock-clock-ink .caption .clock-weather{color:var(--dock-clock-ink);opacity:1;text-shadow:none}
 .bg-photo.l-dock.tl-mist .shade{background:radial-gradient(ellipse 560px 200px at 188px 104px,rgba(10,8,6,.24),rgba(10,8,6,.14) 55%,rgba(10,8,6,0)),linear-gradient(to bottom,rgba(4,10,12,.32),rgba(4,10,12,.14) 150px,rgba(4,10,12,0))}
 .bg-photo.l-dock.tone-light.tl-mist .shade{background:radial-gradient(ellipse 560px 200px at 188px 104px,rgba(10,8,6,.24),rgba(10,8,6,.14) 55%,rgba(10,8,6,0)),linear-gradient(to bottom,rgba(4,10,12,.42),rgba(4,10,12,.2) 160px,rgba(4,10,12,0))}
 .quiet-utils{--u-ink:var(--tr-ink);--u-rest:var(--tr-rest);--u-peer:var(--tr-peer);--u-under:var(--tr-under);--u-shadow:var(--tr-shadow)}
@@ -463,10 +466,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 .bg-dark .ut-underlay,.bg-light .ut-underlay{display:none}
 /* Generated photo-family inks apply only to unlocked Home palettes. */
 .bg-photo.has-adaptive-ink .home{--ink:var(--home-app-ink);--ph-ink:var(--home-app-ink);color:var(--home-app-ink)}
-.bg-photo.has-adaptive-ink.l-list .caption .clock,.bg-photo.has-adaptive-ink.l-list .caption .clock-date{color:var(--tr-clock-ink)}
-.bg-photo.has-adaptive-ink.l-dock .caption .clock,.bg-photo.has-adaptive-ink.l-dock .caption .clock-date{color:var(--tl-clock-ink)}
-.bg-photo.has-adaptive-ink.l-list.tr-dark .caption .clock,.bg-photo.has-adaptive-ink.l-list.tr-dark .caption .clock-date{opacity:1;text-shadow:var(--tr-shadow)}
-.bg-photo.has-adaptive-ink.l-dock.adaptive-tl-dark .caption .clock,.bg-photo.has-adaptive-ink.l-dock.adaptive-tl-dark .caption .clock-date{opacity:1;text-shadow:var(--tl-shadow)}
+.bg-photo.has-adaptive-ink.l-list .caption .clock,.bg-photo.has-adaptive-ink.l-list .caption .clock-date,.bg-photo.has-adaptive-ink.l-list .caption .clock-weather{color:var(--tr-clock-ink)}
+.bg-photo.has-adaptive-ink.l-dock .caption .clock,.bg-photo.has-adaptive-ink.l-dock .caption .clock-date,.bg-photo.has-adaptive-ink.l-dock .caption .clock-weather{color:var(--tl-clock-ink)}
+.bg-photo.has-adaptive-ink.l-list.tr-dark .caption .clock,.bg-photo.has-adaptive-ink.l-list.tr-dark .caption .clock-date,.bg-photo.has-adaptive-ink.l-list.tr-dark .caption .clock-weather{opacity:1;text-shadow:var(--tr-shadow)}
+.bg-photo.has-adaptive-ink.l-dock.adaptive-tl-dark .caption .clock,.bg-photo.has-adaptive-ink.l-dock.adaptive-tl-dark .caption .clock-date,.bg-photo.has-adaptive-ink.l-dock.adaptive-tl-dark .caption .clock-weather{opacity:1;text-shadow:var(--tl-shadow)}
 .bg-photo.has-adaptive-ink.l-dock.adaptive-tl-dark.tr-dark .shade{display:none}
 .has-adaptive-ink .quiet-utils{--u-rest-ink:var(--tr-rest-ink);--u-peer-ink:var(--tr-peer-ink)}
 .has-adaptive-ink.l-list .quiet-utils{--u-rest-ink:var(--br-rest-ink);--u-peer-ink:var(--br-peer-ink)}
@@ -575,7 +578,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 .font-custom .home{font-family:var(--font-ui-family),sans-serif;font-weight:var(--font-ui-weight)}
 .font-custom .home .ph-name{font-family:var(--font-display-family),sans-serif;font-weight:var(--font-display-weight);letter-spacing:-.01em}
 .font-custom .home .clock{position:relative;top:var(--font-clock-shift);font-family:var(--font-display-family),sans-serif;font-weight:var(--font-clock-weight);letter-spacing:-.01em}
-.font-custom .home .clock-date{font-family:var(--font-display-family),sans-serif;font-weight:var(--font-clock-weight);letter-spacing:0}
+.font-custom .home .clock-date,.font-custom .home .clock-weather{font-family:var(--font-display-family),sans-serif;font-weight:var(--font-clock-weight);letter-spacing:0}
 .font-custom .home .tile .label,.font-custom .home .app-focus-name,.font-custom .home .full-name{font-family:var(--font-primary-family),sans-serif;font-weight:var(--font-primary-weight);letter-spacing:0}
 .font-custom .home .u,.font-custom .home .util-focus-label,.font-custom .home .cap-title,.font-custom .home .dock-action,.font-custom .home .ph-action,.font-custom .home .btn,.font-custom .home .dock-empty p,.font-custom .home .ph-empty p{font-family:var(--font-ui-family),sans-serif;font-weight:var(--font-ui-weight);letter-spacing:0}
 .font-custom .home .cap-title{position:relative;top:var(--font-heading-shift)}
@@ -587,14 +590,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 .font-newsreader .home{font-variation-settings:"opsz" 28;font-optical-sizing:none}
 .font-newsreader .home .ph-name{font-variation-settings:"opsz" 72;font-optical-sizing:none}
 .font-newsreader .home .clock{font-variation-settings:"opsz" 48;font-optical-sizing:none}
-.font-newsreader .home .tile .label,.font-newsreader .home .app-focus-name,.font-newsreader .home .full-name,.font-newsreader .home .clock-date{font-variation-settings:"opsz" 36;font-optical-sizing:none}
+.font-newsreader .home .tile .label,.font-newsreader .home .app-focus-name,.font-newsreader .home .full-name,.font-newsreader .home .clock-date,.font-newsreader .home .clock-weather{font-variation-settings:"opsz" 36;font-optical-sizing:none}
 .font-newsreader .home .cap-title,.font-newsreader .home .header-utils,.font-newsreader .home .dock-action,.font-newsreader .home .ph-action,.font-newsreader .home .btn,.font-newsreader .home .dock-empty p,.font-newsreader .home .ph-empty p{font-variation-settings:"opsz" 36}
 .font-newsreader .home .wall-keep{font-family:var(--font-ui-family),serif;font-weight:400;font-variation-settings:"opsz" 36;letter-spacing:0}
 .font-newsreader .home .header-utils .u-label,.font-newsreader .home .wall-keep{position:relative;top:var(--font-action-shift)}
 .clock-digit{display:inline-block;width:var(--font-clock-digit);text-align:center;letter-spacing:0}
-.is-font-switch .home .ph-name,.is-font-switch .home .clock,.is-font-switch .home .clock-date,.is-font-switch .home .tile .label,.is-font-switch .home .u-label,.is-font-switch .home .app-focus-name,.is-font-switch .home .util-focus-label{animation:font-in 160ms linear}
+.is-font-switch .home .ph-name,.is-font-switch .home .clock,.is-font-switch .home .clock-date,.is-font-switch .home .clock-weather,.is-font-switch .home .tile .label,.is-font-switch .home .u-label,.is-font-switch .home .app-focus-name,.is-font-switch .home .util-focus-label{animation:font-in 160ms linear}
 @keyframes font-in{from{opacity:0}}
-@media(prefers-reduced-motion:reduce){.is-font-switch .home .ph-name,.is-font-switch .home .clock,.is-font-switch .home .clock-date,.is-font-switch .home .tile .label,.is-font-switch .home .u-label,.is-font-switch .home .app-focus-name,.is-font-switch .home .util-focus-label{animation-duration:120ms}}
+@media(prefers-reduced-motion:reduce){.is-font-switch .home .ph-name,.is-font-switch .home .clock,.is-font-switch .home .clock-date,.is-font-switch .home .clock-weather,.is-font-switch .home .tile .label,.is-font-switch .home .u-label,.is-font-switch .home .app-focus-name,.is-font-switch .home .util-focus-label{animation-duration:120ms}}
 
 /* Child margins preserve flex spacing on engines without flex gap.
    Auto-margin controls use padding to retain their minimum separation. */

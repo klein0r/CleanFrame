@@ -1091,13 +1091,75 @@
     var d = new Date();
     return WEEKDAYS[d.getDay()] + ', ' + d.getDate() + '. ' + MONTHS[d.getMonth()];
   }
+  /* Weather for Paderborn from Open-Meteo: current temperature and condition, cached apart from the
+     preferences. Shown on its own line under the date only while the reading is under three hours old. */
+  var WEATHER_PLACE = { name: 'Paderborn', latitude: 51.7189, longitude: 8.7575 };
+  var WEATHER_KEY = 'cleanframe.weather', WEATHER_TTL = 1800000, WEATHER_MAX_AGE = 10800000, WEATHER_RETRY = 300000;
+  var weather = { temp: null, code: null, day: true, at: 0 }, weatherTried = 0, weatherBusy = false;
+  /* Line icons on the 24-unit grid, adapted from bathoryalex/CleanFrame (MIT). */
+  var WX = {
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/>',
+    moon: '<path d="M19.5 14.6A7.8 7.8 0 0 1 9.4 4.5a7.8 7.8 0 1 0 10.1 10.1Z"/>',
+    partly: '<path d="M8.6 7.6V5.2M4.1 9.4 2.4 8.6M5 4.6l1.3 1.3M13.1 4.6l-1.3 1.3"/><path d="M5.5 12.6a3.8 3.8 0 0 1 6.9-2.4"/><path d="M8.5 20h9.2a3.8 3.8 0 0 0 .3-7.6 5 5 0 0 0-9.6 1.2A3.2 3.2 0 0 0 8.5 20Z"/>',
+    partlyNight: '<path d="M11.8 8.4A4.6 4.6 0 0 1 6 2.7a4.6 4.6 0 1 0 5.8 5.7Z"/><path d="M8.5 20h9.2a3.8 3.8 0 0 0 .3-7.6 5 5 0 0 0-9.6 1.2A3.2 3.2 0 0 0 8.5 20Z"/>',
+    cloud: '<path d="M7 19h10.5a4.2 4.2 0 0 0 .4-8.4 5.8 5.8 0 0 0-11.1 1.6A3.5 3.5 0 0 0 7 19Z"/>',
+    fog: '<path d="M7 14.5h10.5a4.2 4.2 0 0 0 .4-8.4 5.8 5.8 0 0 0-11.1 1.6"/><path d="M3.5 18h17M6.5 21h11"/>',
+    rain: '<path d="M7 15h10.5a4.2 4.2 0 0 0 .4-8.4 5.8 5.8 0 0 0-11.1 1.6A3.5 3.5 0 0 0 7 15Z"/><path d="m8.5 17.5-1 3M12.5 17.5l-1 3M16.5 17.5l-1 3"/>',
+    snow: '<path d="M7 15h10.5a4.2 4.2 0 0 0 .4-8.4 5.8 5.8 0 0 0-11.1 1.6A3.5 3.5 0 0 0 7 15Z"/><path d="M8 18.5h.1M12 20.5h.1M16 18.5h.1M10 21.5h.1M14 17.5h.1"/>',
+    storm: '<path d="M7 15h10.5a4.2 4.2 0 0 0 .4-8.4 5.8 5.8 0 0 0-11.1 1.6A3.5 3.5 0 0 0 7 15Z"/><path d="m12.5 15-2.5 4h3.5l-2 3.5"/>'
+  };
+  /* WMO weather interpretation codes, as used by Open-Meteo. */
+  function weatherIcon(code, day) {
+    if (code === 0 || code === 1) return day ? 'sun' : 'moon';
+    if (code === 2) return day ? 'partly' : 'partlyNight';
+    if (code === 45 || code === 48) return 'fog';
+    if (code >= 95) return 'storm';
+    if (code >= 71 && code <= 77 || code === 85 || code === 86) return 'snow';
+    if (code >= 51) return 'rain';
+    return 'cloud';
+  }
+  function loadWeather() {
+    try {
+      var s = JSON.parse(localStorage.getItem(WEATHER_KEY));
+      if (s && typeof s.temp === 'number' && typeof s.at === 'number') weather = { temp: s.temp, code: typeof s.code === 'number' ? s.code : null, day: s.day !== false, at: s.at };
+    } catch (e) { /* the cache is optional */ }
+  }
+  function refreshWeather(done) {
+    var now = Date.now();
+    if (weatherBusy || now - weather.at < WEATHER_TTL || now - weatherTried < WEATHER_RETRY) return;
+    weatherBusy = true; weatherTried = now;
+    var xhr = new XMLHttpRequest(), finished = false;
+    function finish() { if (finished) return; finished = true; weatherBusy = false; if (done) done(); }
+    xhr.timeout = 8000;
+    xhr.onload = function () {
+      try {
+        var cur = xhr.status >= 200 && xhr.status < 300 ? JSON.parse(xhr.responseText).current : null;
+        if (cur && typeof cur.temperature_2m === 'number') {
+          weather = { temp: Math.round(cur.temperature_2m), code: typeof cur.weather_code === 'number' ? cur.weather_code : null, day: cur.is_day !== 0, at: Date.now() };
+          try { localStorage.setItem(WEATHER_KEY, JSON.stringify(weather)); } catch (e) { /* the cache is optional */ }
+        }
+      } catch (e) { /* keep the previous reading */ }
+      finish();
+    };
+    xhr.onerror = xhr.ontimeout = xhr.onabort = finish;
+    try {
+      xhr.open('GET', 'https://api.open-meteo.com/v1/forecast?latitude=' + WEATHER_PLACE.latitude + '&longitude=' + WEATHER_PLACE.longitude + '&current=temperature_2m,weather_code,is_day&timezone=auto', true);
+      xhr.send();
+    } catch (e) { finish(); }
+  }
+  function weatherHtml() {
+    if (weather.temp === null || Date.now() - weather.at > WEATHER_MAX_AGE) return '';
+    return '<span class="clock-weather" aria-label="Wetter in ' + WEATHER_PLACE.name + ': ' + weather.temp + ' Grad">'
+      + (weather.code !== null ? '<svg class="ico wx-icon" viewBox="0 0 24 24" aria-hidden="true">' + WX[weatherIcon(weather.code, weather.day)] + '</svg>' : '')
+      + '<span class="wx-temp">' + weather.temp + '°</span><span class="wx-place">' + WEATHER_PLACE.name + '</span></span>';
+  }
   function clockHtml() {
     var text = clockText(), metrics = fontMetrics[homeFont()];
     if (!metrics || !metrics.digitCell) return text;
     return text.replace(/[0-9]/g, function (digit) { return '<span class="clock-digit">' + digit + '</span>'; });
   }
   function renderCaption(t, hs) {
-    var html = '<span class="clock">' + clockHtml() + '</span><span class="clock-date">' + dateText() + '</span>';
+    var html = '<span class="clock">' + clockHtml() + '</span><span class="clock-date">' + dateText() + '</span>' + weatherHtml();
     if (S.c.apps !== 'icons' && hs.items[hs.i] && (S.c.layout === 'list' ? photoLabel(hs.items[hs.i].id, false).size < 88 || photoLabel(hs.items[hs.i].id, false).ellipsis : hs.zone === 'apps' && reducedDockLabel(hs.items[hs.i].id))) html += '<span class="cap-line full-name">' + esc(app(hs.items[hs.i].id).name) + '</span>';
     setHTML(caption, html);
   }
@@ -1801,8 +1863,12 @@
   function updateClock() {
     clearTimeout(clockTimer);
     if (document.hidden) return;
-    if (top().id === 'home' || isSettingsDetail(top())) renderCaption(top(), homeState(top()));
+    paintCaption();
+    refreshWeather(paintCaption);
     clockTimer = setTimeout(updateClock, 60000 - (Date.now() % 60000) + 30);
+  }
+  function paintCaption() {
+    if (!document.hidden && (top().id === 'home' || isSettingsDetail(top()))) renderCaption(top(), homeState(top()));
   }
   function focusStage() { try { stage.focus({ preventScroll: true }); } catch (e) { stage.focus(); } }
   function after() {
@@ -1926,6 +1992,7 @@
   /* ---------- Start ---------- */
   cueL.innerHTML = icon('left'); cueR.innerHTML = icon('right');
   initialise();
+  loadWeather();
   setLook({}, { transient: true, startup: true });
   norm(); render(); fit(); focusStage(); updateClock(); syncRotation();
 })();
