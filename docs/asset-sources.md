@@ -1,19 +1,17 @@
 # Asset sources
 
-Reviewed on 20 October 2026. Each of the twelve linked Unsplash photo pages displayed the listed author and “Free to use under the Unsplash License”. The bundled wallpapers, thumbnails and material fields derive from these photos. Keep these credits with redistributions and follow the [Unsplash License](https://unsplash.com/license).
+Reviewed on 20 October 2026. Each of the ten linked Unsplash photo pages displayed the listed author and “Free to use under the Unsplash License”. The bundled wallpapers, thumbnails and material fields derive from these photos. Keep these credits with redistributions and follow the [Unsplash License](https://unsplash.com/license).
 
 | Wallpaper | Photographer | Source |
 | --- | --- | --- |
 | Misty coast | Ganapathy Kumar | [Photo page](https://unsplash.com/photos/n4VMQZIkgDg) |
 | Quiet cove | Joshua Wordel | [Photo page](https://unsplash.com/photos/1L_5PT7EKzU) |
-| Forest mist | Dejan Zakic | [Photo page](https://unsplash.com/photos/rr2EF3J5F2Y) |
 | Mountain valley | Aniket Deole | [Photo page](https://unsplash.com/photos/M6XC789HLe8) |
 | Desert stars | Mohammad Alizade | [Photo page](https://unsplash.com/photos/4wzRuAb-KWs) |
 | Blue peaks | John Rodenn Castillo | [Photo page](https://unsplash.com/photos/rQqWOHZ96OM) |
 | Bridge at dusk | Justin Wolff | [Photo page](https://unsplash.com/photos/pbp_Ww2cewA) |
 | Sunlit ridges | Cristina Gottardi | [Photo page](https://unsplash.com/photos/wndpWTiDuT0) |
 | Sunlit summits | Rudra Gupta | [Photo page](https://unsplash.com/photos/PuTSzJJ-qyU) |
-| Sydney Harbour | Caleb | [Photo page](https://unsplash.com/photos/JmuyB_LibRo) |
 | Amber hills | Chris Barbalis | [Photo page](https://unsplash.com/photos/vazZtmYFgFY) |
 | Alpine glow | Cristina Gottardi | [Photo page](https://unsplash.com/photos/CSpjU6hYo_0) |
 

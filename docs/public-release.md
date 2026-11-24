@@ -10,7 +10,7 @@ Paid Pangram fonts, signing keys, account tokens, local device addresses, recove
 
 ## Asset review
 
-Each of the fifteen wallpaper pages was checked for author and Unsplash licence on 20 October 2026; see [asset sources](asset-sources.md). ABC and SBS icons now use documented MIT Custom Brand Icons sources. Font and icon licence texts are retained. Original code uses MIT; third-party assets keep their own terms in [third-party notices](../THIRD_PARTY_NOTICES.md).
+Each of the ten bundled Unsplash wallpaper pages was checked for author and Unsplash licence on 20 October 2026; the three generated wallpapers have no photo page. See [asset sources](asset-sources.md). ABC and SBS icons now use documented MIT Custom Brand Icons sources. Font and icon licence texts are retained. Original code uses MIT; third-party assets keep their own terms in [third-party notices](../THIRD_PARTY_NOTICES.md).
 
 ## Validation
 

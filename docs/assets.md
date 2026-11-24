@@ -4,10 +4,10 @@ The app includes all runtime JPEGs, thumbnails, registered material fields, publ
 
 ## Current List and Dock materials
 
-The runtime uses fifteen images: twelve Unsplash photographs and three generated images. Each has a background, a thumbnail, a small panel backdrop and four full-stage material JPEGs. The runtime never generates blur or reads photo pixels. Generate selected materials with:
+The runtime uses thirteen images: ten Unsplash photographs and three generated images. Each has a background, a thumbnail, a small panel backdrop and four full-stage material JPEGs. The runtime never generates blur or reads photo pixels. Generate selected materials with:
 
 ```sh
-node scripts/build-materials.mjs summit,sydney,amber,alpine
+node scripts/build-materials.mjs summit,amber,alpine
 ```
 
 Omit the argument to regenerate every catalogue entry. Output goes to ignored `.local/materials/builder/`. Review it, then copy `*-panel.jpg` to `app/assets/wallpapers/` and the other four JPEGs to `app/assets/materials/`.
@@ -15,7 +15,7 @@ Omit the argument to regenerate every catalogue entry. Output goes to ignored `.
 - `field-blur`: 28px blur, saturation .92, mirrored edge padding and highlight soft clipping.
 - `field-frost`: the same registered crop with 42px blur.
 - `field-clear`: 2px blur and saturation 1.06, with no baked veil.
-- `study-soft`: the retained name for the reviewed Dock Soft recipe, including the lower scrim, 14px blur and compressed local variation. The original eight that remain bundled preserve their calibrated tint. New photos use a bounded tint selected from the dock band.
+- `study-soft`: the retained name for the reviewed Dock Soft recipe, including the lower scrim, 14px blur and compressed local variation. The original seven that remain bundled preserve their calibrated tint. New photos use a bounded tint selected from the dock band.
 
 All fields use the centred 1920 x 1080 crop. The small panel backdrop comes from that same Frost field. The newer backgrounds use baseline sRGB JPEG at quality 90 with full chroma; thumbnails use quality 85. Their originals remain unchanged.
 
@@ -30,10 +30,10 @@ All fields use the centred 1920 x 1080 crop. The small panel backdrop comes from
 Full-size original photographs are local inputs and are not required for glass regeneration: the bundled 1920px JPEGs are the rendering inputs. To recreate JPEGs/thumbnails from the original supplied filenames on a Mac:
 
 ```sh
-python3 scripts/prepare-wallpapers.py /path/to/originals --ids summit,sydney,amber,alpine
+python3 scripts/prepare-wallpapers.py /path/to/originals --ids summit,amber,alpine
 ```
 
-The retained generator covers the twelve bundled Unsplash filenames and writes `.local/materials/wallpapers/`. The original eight keep their macOS `sips` recipe. The newer four require Pillow and use the reviewed centred crop and JPEG settings; Pillow is a development dependency only. Install Pillow in a local Python environment when using the four newer photos.
+The retained generator covers the ten bundled Unsplash filenames and writes `.local/materials/wallpapers/`. The original seven keep their macOS `sips` recipe. The newer three require Pillow and use the reviewed centred crop and JPEG settings; Pillow is a development dependency only. Install Pillow in a local Python environment when using the three newer photos.
 
 For another photo, add its source/credit to `SOURCES.json`, prepare its background and thumbnail, add the gallery entry in `catalog.js`, generate the four registered materials and panel backdrop, then measure and review its foreground metadata. Keep the crop identical across all assets. Run source and browser checks before packaging.
 
@@ -41,7 +41,7 @@ For another photo, add its source/credit to `SOURCES.json`, prepare its backgrou
 
 Use a short lowercase ID such as `lantern`; every file name below derives from it. Keep the untouched original outside `app/`, for example in `.local/originals/`, because the steps re-encode it.
 
-1. **Background and thumbnail.** Write `app/assets/wallpapers/<id>.jpg` at 1920 x 1080 and `<id>-thumb.jpg` at 512 x 288, both from the same centred 16:9 crop. Use the `prepare_cover` settings in `scripts/prepare-wallpapers.py`: baseline (not progressive) JPEG, sRGB, `optimize=True`; background quality 90 with full chroma (`subsampling=0`), thumbnail quality 85 (`subsampling=2`). Many editors save progressive JPEG by default, so check the result. That script only knows the twelve bundled Unsplash IDs; for a new ID, apply the same `prepare_cover` code to the original. Start from the largest original available, because re-encoding an existing 1920px JPEG loses some quality.
+1. **Background and thumbnail.** Write `app/assets/wallpapers/<id>.jpg` at 1920 x 1080 and `<id>-thumb.jpg` at 512 x 288, both from the same centred 16:9 crop. Use the `prepare_cover` settings in `scripts/prepare-wallpapers.py`: baseline (not progressive) JPEG, sRGB, `optimize=True`; background quality 90 with full chroma (`subsampling=0`), thumbnail quality 85 (`subsampling=2`). Many editors save progressive JPEG by default, so check the result. That script only knows the ten bundled Unsplash IDs; for a new ID, apply the same `prepare_cover` code to the original. Start from the largest original available, because re-encoding an existing 1920px JPEG loses some quality.
 2. **`SOURCES.json` entry.** Add `id`, `name`, `src`, `thumb`, `pos` (`50% 50%`), `tone`, `credit` and `source`. Do this before step 3, which rejects IDs missing here with `Unknown wallpaper`. Record a non-Unsplash source and its terms in [asset sources](asset-sources.md) too.
 3. **Materials and panel.** Run `node scripts/build-materials.mjs <id>`. Copy `<id>-panel.jpg` from `.local/materials/builder/` to `app/assets/wallpapers/`, and the four `field-blur`, `field-frost`, `field-clear` and `study-soft` JPEGs to `app/assets/materials/`. Never supply a hand-made panel: it is a reduced Frost field, not a sharp thumbnail.
 4. **`catalog.js` entry.** Copy the entry of a bundled photo with similar brightness as a starting point. Without an `adaptive-ink.js` entry, the runtime uses the catalogue's `ut` values, which is sufficient. Fields:

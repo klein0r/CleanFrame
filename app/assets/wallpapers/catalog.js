@@ -31,21 +31,6 @@ window.CleanFrameWallpapers = [
     "clockMist": true
   },
   {
-    "id": "forest",
-    "name": "Waldnebel",
-    "src": "assets/wallpapers/forest.jpg",
-    "thumb": "assets/wallpapers/forest-thumb.jpg",
-    "tone": "dark",
-    "ut": {
-      "tr": "mist",
-      "br": "light"
-    },
-    "frostVeil": 0.12,
-    "listColumn": 0,
-    "dockQuiet": false,
-    "clockMist": true
-  },
-  {
     "id": "valley",
     "name": "Bergtal",
     "src": "assets/wallpapers/valley.jpg",
@@ -136,21 +121,6 @@ window.CleanFrameWallpapers = [
     "listColumn": 0,
     "dockQuiet": false,
     "clockMist": false
-  },
-  {
-    "id": "sydney",
-    "name": "Sydney Harbour",
-    "src": "assets/wallpapers/sydney.jpg",
-    "thumb": "assets/wallpapers/sydney-thumb.jpg",
-    "tone": "light",
-    "ut": {
-      "tr": "mist",
-      "br": "mist"
-    },
-    "frostVeil": 0.44,
-    "listColumn": 3,
-    "dockQuiet": false,
-    "clockMist": true
   },
   {
     "id": "amber",

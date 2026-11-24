@@ -1,6 +1,6 @@
 """Prepare supplied originals in ignored staging; never replace app assets automatically.
 
-The original eight photos retain their macOS sips recipe. The four newer photos
+The original seven photos retain their macOS sips recipe. The three newer photos
 use Pillow (development dependency only); see docs/assets.md.
 """
 import argparse
@@ -16,18 +16,16 @@ OUTPUT = ROOT / '.local/materials/wallpapers'
 PHOTOS = [
     ('misty', 'Misty coast', 'ganapathy-kumar-n4VMQZIkgDg-unsplash.jpg', 'Ganapathy Kumar', 'n4VMQZIkgDg', 'light'),
     ('cove', 'Quiet cove', 'joshua-wordel-1L_5PT7EKzU-unsplash.jpg', 'Joshua Wordel', '1L_5PT7EKzU', 'light'),
-    ('forest', 'Forest mist', 'dejan-zakic-rr2EF3J5F2Y-unsplash.jpg', 'Dejan Zakic', 'rr2EF3J5F2Y', 'dark'),
     ('valley', 'Mountain valley', 'aniket-deole-M6XC789HLe8-unsplash.jpg', 'Aniket Deole', 'M6XC789HLe8', 'dark'),
     ('night', 'Desert stars', 'mohammad-alizade-4wzRuAb-KWs-unsplash.jpg', 'Mohammad Alizade', '4wzRuAb-KWs', 'light'),
     ('peaks', 'Blue peaks', 'john-rodenn-castillo-rQqWOHZ96OM-unsplash.jpg', 'John Rodenn Castillo', 'rQqWOHZ96OM', 'dark'),
     ('bridge', 'Bridge at dusk', 'justin-wolff-pbp_Ww2cewA-unsplash.jpg', 'Justin Wolff', 'pbp_Ww2cewA', 'dark'),
     ('ridge', 'Sunlit ridges', 'cristina-gottardi-wndpWTiDuT0-unsplash.jpg', 'Cristina Gottardi', 'wndpWTiDuT0', 'dark'),
     ('summit', 'Sunlit summits', 'rudra-gupta-PuTSzJJ-qyU-unsplash.jpg', 'Rudra Gupta', 'PuTSzJJ-qyU', 'dark'),
-    ('sydney', 'Sydney Harbour', 'caleb-JmuyB_LibRo-unsplash.jpg', 'Caleb', 'JmuyB_LibRo', 'light'),
     ('amber', 'Amber hills', 'chris-barbalis-vazZtmYFgFY-unsplash.jpg', 'Chris Barbalis', 'vazZtmYFgFY', 'light'),
     ('alpine', 'Alpine glow', 'cristina-gottardi-CSpjU6hYo_0-unsplash.jpg', 'Cristina Gottardi', 'CSpjU6hYo_0', 'light'),
 ]
-COVER_IDS = {'summit', 'sydney', 'amber', 'alpine'}
+COVER_IDS = {'summit', 'amber', 'alpine'}
 
 
 def file_hash(path):
@@ -64,7 +62,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('source', type=Path,
                         help='Folder containing the selected original Unsplash filenames')
-    parser.add_argument('--ids', help='Comma-separated wallpaper IDs; default: all 12')
+    parser.add_argument('--ids', help='Comma-separated wallpaper IDs; default: all 10')
     args = parser.parse_args()
     requested = None if args.ids is None else {id.strip() for id in args.ids.split(',')}
     known = {photo[0] for photo in PHOTOS}
@@ -77,13 +75,13 @@ def main():
     if missing:
         parser.error('Missing selected originals:\n' + '\n'.join(missing))
     if any(photo[0] not in COVER_IDS for photo in selected) and not shutil.which('sips'):
-        parser.error('The original eight-photo recipe requires macOS sips.')
+        parser.error('The original seven-photo recipe requires macOS sips.')
     Image = ImageOps = None
     if any(photo[0] in COVER_IDS for photo in selected):
         try:
             from PIL import Image, ImageOps
         except ImportError:
-            parser.error('The four newer photos require Pillow. See docs/assets.md.')
+            parser.error('The three newer photos require Pillow. See docs/assets.md.')
 
     OUTPUT.mkdir(parents=True, exist_ok=True)
     items = []

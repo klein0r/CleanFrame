@@ -20,16 +20,6 @@
     "source": "https://unsplash.com/photos/1L_5PT7EKzU"
   },
   {
-    "id": "forest",
-    "name": "Waldnebel",
-    "src": "assets/wallpapers/forest.jpg",
-    "thumb": "assets/wallpapers/forest-thumb.jpg",
-    "pos": "50% 50%",
-    "tone": "dark",
-    "credit": "Dejan Zakic",
-    "source": "https://unsplash.com/photos/rr2EF3J5F2Y"
-  },
-  {
     "id": "valley",
     "name": "Bergtal",
     "src": "assets/wallpapers/valley.jpg",
@@ -88,16 +78,6 @@
     "tone": "dark",
     "credit": "Rudra Gupta",
     "source": "https://unsplash.com/photos/PuTSzJJ-qyU"
-  },
-  {
-    "id": "sydney",
-    "name": "Sydney Harbour",
-    "src": "assets/wallpapers/sydney.jpg",
-    "thumb": "assets/wallpapers/sydney-thumb.jpg",
-    "pos": "50% 50%",
-    "tone": "light",
-    "credit": "Caleb",
-    "source": "https://unsplash.com/photos/JmuyB_LibRo"
   },
   {
     "id": "amber",
