@@ -226,5 +226,20 @@ window.CleanFrameWallpapers = [
     "listColumn": 0,
     "dockQuiet": false,
     "clockMist": false
+  },
+  {
+    "id": "bergpanorama",
+    "name": "Bergpanorama",
+    "src": "assets/wallpapers/bergpanorama.jpg",
+    "thumb": "assets/wallpapers/bergpanorama-thumb.jpg",
+    "tone": "dark",
+    "ut": {
+      "tr": "mist",
+      "br": "mist"
+    },
+    "frostVeil": 0.3,
+    "listColumn": 2,
+    "dockQuiet": true,
+    "clockMist": true
   }
 ];
