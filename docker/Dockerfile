@@ -1,6 +1,6 @@
 # Tizen CLI 6.1 (sdb, tizen) + Node.js 24 + Python 3 for CleanFrame.
 # Tizen Studio for Linux exists only for x86_64: build and run with --platform linux/amd64.
-FROM node:24-bookworm
+FROM node:24-trixie
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       python3 zip unzip gettext-base libncurses6 libxml2 procps ca-certificates curl \
