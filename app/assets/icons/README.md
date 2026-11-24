@@ -7,3 +7,5 @@ Simple Icons sources are CC0; trademarks remain with their owners. Custom Brand 
 Prime uses the two smile subpaths, not clipped wordmark text. Apple Music uses the note subpath without the outer app tile. These are intentional simplified marks beside full service names. Simple Icons CC0 and Custom Brand Icons MIT texts are included here. The old Australian TV source GPL text is retained for provenance only; no current icon uses that source.
 
 ZDF and ARD Mediathek use the logos from Wikimedia Commons, which classifies both as public-domain text logos (PD-textlogo). The trademarks remain with ZDF and the ARD; see ADDITIONAL-SOURCES.json.
+
+Joyn uses the logo file from German Wikipedia, which marks it as public domain in Germany for lack of originality (Bild-PD-Schöpfungshöhe). Wikipedia flags it as unsuitable for Commons, so this status may not hold in every country. The trademark remains with Joyn; see ADDITIONAL-SOURCES.json.

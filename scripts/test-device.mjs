@@ -32,6 +32,15 @@ function harness({ supported = true, throwSource = false } = {}) {
   return { device: window.FrameDevice, requests, launches, sourceRequests, changes, advance, setCurrent: value => { current = value; } };
 }
 
+test('Joyn maps to its own monochrome mark', () => {
+  const h = harness(), results = [];
+  assert.deepEqual({ ...h.device.describe('cg2m3QSB89.7tv') }, { brand: 'joyn', name: '' });
+  h.device.apps((error, apps) => results.push({ error, apps }));
+  h.requests[0].ok([{ id: 'cg2m3QSB89.7tv', name: 'Joyn', show: true, iconPath: '' }]);
+  assert.equal(results[0].apps[0].brand, 'joyn');
+  assert.equal(results[0].apps[0].rank, 20);
+});
+
 test('a 500-app catalogue can arrive after the old eight-second deadline', () => {
   const h = harness(), results = [];
   h.device.apps((error, apps) => results.push({ error, apps }));

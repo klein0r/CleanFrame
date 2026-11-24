@@ -28,5 +28,11 @@
     "source": "https://commons.wikimedia.org/wiki/File:ARD_2019_logo.svg (file version of 19 November 2023)",
     "licence": "Public domain (Wikimedia Commons PD-textlogo: below the threshold of originality). Trademark of its owner; Commons notes possible trademark protection.",
     "note": "Single path kept unchanged, white fill for launcher."
+  },
+  {
+    "icon": "joyn",
+    "source": "https://de.wikipedia.org/wiki/Datei:Joyn_(Streaminganbieter)_logo.svg (German Wikipedia local file, version of 26 November 2019)",
+    "licence": "Public domain in Germany (German Wikipedia Bild-PD-Schöpfungshöhe: below the threshold of originality). Marked NoCommons, so it may not be public domain everywhere. Trademark of its owner.",
+    "note": "Single path kept unchanged, white fill for launcher; XML declaration and ids removed. The Wikipedia file is a black conversion of joyn.de's own logo."
   }
 ]

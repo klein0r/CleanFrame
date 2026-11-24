@@ -15,10 +15,10 @@
     'kk8MbItQ0H.VUDU', 'Jz7aUrV2Q4.Twitch', 'OK2Rdkjmsi.IMDbTV', 'Ob3XhAVMu6.amcplus',
     'KaLitts8bq.tenplaySamsungTizen', 'eYuOiOLYQX.KayoSports', 'Ne2ZsPWdKl.9NOW',
     '3KA0pm7a7V.TubiTV', 'rJeHak5zRg.Spotify', 'icp4AvUPiA.7plus',
-    'yPSlpvfeTf.ZDFmediathek', 'SrAoJxGQUf.ARD'];
+    'yPSlpvfeTf.ZDFmediathek', 'SrAoJxGQUf.ARD', 'cg2m3QSB89.7tv'];
   var CONSUMER_SYSTEM = ['org.tizen.browser', 'com.microsoft.copilot'];
   var EXTRA_BRANDS = {'rJeHak5zRg.Spotify': 'spotify', '5b8c3eb16b.BeamCTVDev': 'hbomax', 'cj37Ni3qXM.HBONow': 'hbomax', '3KA0pm7a7V.TubiTV': 'tubi',
-    'yPSlpvfeTf.ZDFmediathek': 'zdf', 'SrAoJxGQUf.ARD': 'ard'};
+    'yPSlpvfeTf.ZDFmediathek': 'zdf', 'SrAoJxGQUf.ARD': 'ard', 'cg2m3QSB89.7tv': 'joyn'};
   // Shorter display names where the TV's own name is a long store title.
   var EXTRA_NAMES = {'SrAoJxGQUf.ARD': 'ARD Mediathek', 'yPSlpvfeTf.ZDFmediathek': 'ZDF'};
   var INTERNAL = ['adplatform.ADPlayer', 'WykOS4t4F0.cmsWebApp', '25emanual3.emanual',

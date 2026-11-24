@@ -24,7 +24,7 @@
     { id: 'sbs', name: 'SBS On Demand', mark: true, appId: 'OyE7OuxlUi.SBSOnDemand' },
     { id: 'applemusic', name: 'Apple Music', mark: true, appId: 'org.tizen.apple.apple-music' }
   ];
-  var EXTRA_MARKS = ['hbomax', 'spotify', 'tubi', 'zdf', 'ard'];
+  var EXTRA_MARKS = ['hbomax', 'spotify', 'tubi', 'zdf', 'ard', 'joyn'];
   function describe(appId) { var d = window.FrameDevice && FrameDevice.describe ? FrameDevice.describe(appId) : null; return { brand: d && EXTRA_MARKS.indexOf(d.brand) >= 0 ? d.brand : '', name: d && d.name || '' }; }
   var PRIMARY = PRIMARY_APPS.map(function (a) { return a.id; }), APPS = PRIMARY_APPS.slice(), ALPHA = [];
   var WALLS = window.CleanFrameWallpapers || [{ id: 'misty', name: 'Nebelküste', tone: 'light', ut: { tr: 'mist', br: 'mist' }, frostVeil: .20 }];
