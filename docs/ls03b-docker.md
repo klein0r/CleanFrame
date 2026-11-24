@@ -1,9 +1,11 @@
 # 2022 Frame (LS03B, 1720.7): building, signing and native Home from Docker
 
+Device results and open checks are summarised in [frame-2022.md](frame-2022.md).
+
 This is an owner report for a **GQ55LS03BAUXZG** (2022 Frame, 55", German unit),
 firmware **T-PTMDEUC-1720.7**, Tizen **6.5.0**, ARMv7l, build
-`T-PTMDEUC-REL-202602250226` — the same build as the fork's
-[ls03b-1720.md](ls03b-1720.md) report. It records how the launcher is built,
+`T-PTMDEUC-REL-202602250226`, the TV described in
+[the 2022 device report](frame-2022.md). It records how the launcher is built,
 signed and installed, and how native Home is applied, from a single Docker
 container instead of a local Tizen Studio install, and the one transport change
 that Docker requires.
@@ -96,8 +98,8 @@ the widget are your own (not the Tizen test signer) before trusting an install.
 
 This firmware ships **.NET Core 3.1.3** only (no 6.0), so the maintained helper
 (.NET 6, firmware-guarded to the LS03D reference TV) does not run here. An
-owner-built copy of `scripts/native-home` is needed, exactly as
-[ls03b-1720.md](ls03b-1720.md) describes. The adapted copy stays private under
+owner-built copy of `scripts/native-home` is needed; its results on this TV are
+in [the 2022 device report](frame-2022.md#native-home-on-this-firmware). The adapted copy stays private under
 `.local/native-home/`; it is **not** committed. Three edits to `Control.cs` and one
 to `Control.csproj`:
 
