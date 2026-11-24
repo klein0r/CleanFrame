@@ -16,6 +16,7 @@ on the TV and what remains open.
 | --- | --- |
 | Signed web widget | Built and signed in a `linux/amd64` Docker container (Tizen Studio 6.1 CLI) with the owner's Samsung certificates and a separate SDK-generated app identity. Installed with `npm run tv:install` and launched with `npm run tv:launch`. |
 | Debian trixie build image | After the image moved from `node:24-bookworm` to `node:24-trixie`, signing, the SDB connection, in-place installation and launch worked on the TV. Two in-place updates kept the app ID and author certificate. |
+| TV settings | `com.samsung.tv.coba.setting` is installed and its launch was reported as successful, but nothing appeared on screen. A single launch of `org.tizen.menu` opened the full settings menu at Picture, confirmed by the owner. CleanFrame now opens `org.tizen.menu` first below Tizen 7. |
 | Network access | With the `internet` privilege and one `<access origin>` for `api.open-meteo.com`, the launcher's weather request worked on the TV. The owner confirmed the Paderborn weather line under the date. |
 | Developer connection | Port 26101 opened only after the TV was disconnected from mains power, not after a restart with the remote. |
 | Native runtime | Only .NET Core 3.1.3 is present. The maintained .NET 6 helper cannot run here. A private copy that targets `netcoreapp3.1` with `RollForward=Major` ran as SDK user 901. |

@@ -58,7 +58,9 @@ Art Mode sends an application control to the installed `org.tizen.art-app`, with
 
 This mode comes from [research on Samsung's Art app](https://github.com/TheFab21/ha-samsungtv-smart/blob/master/notes/QN55LS03FAFXZA/ART_MODE_DECOMPILED.md), on another Tizen 9 Frame model. It is an internal Samsung contract, not a documented public Art API. Its visible behaviour on this exact firmware must be confirmed on the TV.
 
-Samsung Home explicitly launches the original `com.samsung.tv.csfs` app, independently of the new Home assignment. The earlier `com.samsung.tv.coba.newhome` component did not open Smart Hub visibly and is no longer the escape target. TV settings still uses `com.samsung.tv.coba.setting`. Exact on-device destinations are recorded in docs/tv-status.md; launch callbacks alone are not visual proof. There is no blind power-key fallback.
+Samsung Home explicitly launches the original `com.samsung.tv.csfs` app, independently of the new Home assignment. The earlier `com.samsung.tv.coba.newhome` component did not open Smart Hub visibly and is no longer the escape target. Exact on-device destinations are recorded in docs/tv-status.md; launch callbacks alone are not visual proof. There is no blind power-key fallback.
+
+TV settings depends on the Tizen version the TV reports. Below Tizen 7 it opens `org.tizen.menu`, the full Samsung settings menu; on the 2022 Frame (Tizen 6.5) `com.samsung.tv.coba.setting` was reported as launched but showed nothing. From Tizen 7, or when the version is unknown, it opens `com.samsung.tv.coba.setting`, the reference TV's target. If the TV refuses the first target, the other is tried; a timeout is shown as an error instead, so two menus cannot open.
 
 All calls have bounded response handling. A failure leaves CleanFrame usable. No simulated device success views remain. Browser validation cannot confirm the visible Samsung destination.
 

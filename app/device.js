@@ -37,7 +37,7 @@
     return { message: 'Der Fernseher konnte diese Ansicht nicht öffnen.', detail: err && (err.message || err.name) || 'Erneut versuchen oder mit der Home-Taste der Fernbedienung zu CleanFrame zurückkehren.' };
   }
   function bounded(done, timeout) {
-    var finished = false, timer = setTimeout(function () { finish({ message: 'Der Fernseher hat nicht reagiert. Bitte erneut versuchen.' }); }, timeout || 8000);
+    var finished = false, timer = setTimeout(function () { finish({ message: 'Der Fernseher hat nicht reagiert. Bitte erneut versuchen.', timeout: true }); }, timeout || 8000);
     function finish(err, value) { if (finished) return; finished = true; clearTimeout(timer); done(err, value); }
     return finish;
   }
@@ -120,7 +120,25 @@
     } catch (err) { finish(failure(err)); }
   }
   function home(done) { launchApp('com.samsung.tv.csfs', done); }
-  function settings(done) { launchApp('com.samsung.tv.coba.setting', done); }
+  /* TV settings: the 2022 Frame (Tizen 6.5) reports a launch of com.samsung.tv.coba.setting but shows
+     nothing, while org.tizen.menu opens the full menu there. The reference TV (Tizen 9) uses
+     com.samsung.tv.coba.setting. Below Tizen 7 the menu is tried first; the other ID follows only
+     when the first launch is refused, never after a timeout, so two menus cannot both open. */
+  function platformMajor() {
+    try {
+      var sys = window.tizen && window.tizen.systeminfo;
+      var major = sys && typeof sys.getCapability === 'function' ? parseInt(String(sys.getCapability('http://tizen.org/feature/platform.version')), 10) : 0;
+      return major > 0 ? major : 0;
+    } catch (err) { return 0; }
+  }
+  function settings(done) {
+    var major = platformMajor();
+    var ids = major && major < 7 ? ['org.tizen.menu', 'com.samsung.tv.coba.setting'] : ['com.samsung.tv.coba.setting', 'org.tizen.menu'];
+    launchApp(ids[0], function (err) {
+      if (err && !err.timeout && api()) launchApp(ids[1], done);
+      else done(err);
+    });
+  }
   function apps(done) {
     if (!api()) { unavailable(done); return; }
     // Large installed catalogues can take longer than a launch response.

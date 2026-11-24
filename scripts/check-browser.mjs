@@ -90,7 +90,7 @@ function installHarness({ seed, legacy, mock, catalog, minuteMs, catalogFailure,
       },
       launch(id, ok, fail) {
         const tv = window.__tv; tv.calls.push({ method: 'launch', id });
-        setTimeout(() => tv.launchFailure ? fail({ name: 'NotFoundError', message: 'App unavailable for QA' }) : ok(), 0);
+        setTimeout(() => tv.launchFailure || (tv.refuseIds || []).includes(id) ? fail({ name: 'NotFoundError', message: 'App unavailable for QA' }) : ok(), 0);
       },
       launchAppControl(control, id, ok, fail) {
         const tv = window.__tv; tv.calls.push({ method: 'launchAppControl', id, control });
@@ -478,6 +478,15 @@ try {
     await current.evaluate(() => window.dispatchEvent(new Event('focus'))); await group('samsung'); await act('samsung.settings');
     await current.waitForFunction(() => __tv.calls.length === 5);
     check('TV settings keeps installed target', (await current.evaluate(() => __tv.calls.at(-1))).id === 'com.samsung.tv.coba.setting');
+    await current.evaluate(() => { tizen.systeminfo.getCapability = key => key === 'http://tizen.org/feature/platform.version' ? '6.5.0' : ''; window.dispatchEvent(new Event('focus')); });
+    await group('samsung'); await act('samsung.settings');
+    await current.waitForFunction(() => __tv.calls.length === 6);
+    check('TV settings opens the Samsung menu below Tizen 7', (await current.evaluate(() => __tv.calls.at(-1))).id === 'org.tizen.menu');
+    await current.evaluate(() => { __tv.refuseIds = ['org.tizen.menu']; window.dispatchEvent(new Event('focus')); });
+    await group('samsung'); await act('samsung.settings');
+    await current.waitForFunction(() => __tv.calls.length === 8);
+    check('A refused TV settings target falls back to the other', same((await current.evaluate(() => __tv.calls.slice(-2).map(c => c.id))), ['org.tizen.menu', 'com.samsung.tv.coba.setting']));
+    await current.evaluate(() => { __tv.refuseIds = []; delete tizen.systeminfo.getCapability; });
     await current.evaluate(() => { window.dispatchEvent(new Event('focus')); __tv.launchFailure = true; });
     await scene('home'); await act('home.app.netflix'); await current.waitForFunction(() => ShoreQA.where().view === 'message');
     check('Launch failure is shown', /konnte|nicht verfügbar|erneut versuchen/i.test(await current.locator('#stage').innerText()));
