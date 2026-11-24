@@ -24,6 +24,8 @@
     { id: 'sbs', name: 'SBS On Demand', mark: true, appId: 'OyE7OuxlUi.SBSOnDemand' },
     { id: 'applemusic', name: 'Apple Music', mark: true, appId: 'org.tizen.apple.apple-music' }
   ];
+  var EXTRA_MARKS = ['hbomax', 'spotify', 'tubi', 'zdf', 'ard'];
+  function describe(appId) { var d = window.FrameDevice && FrameDevice.describe ? FrameDevice.describe(appId) : null; return { brand: d && EXTRA_MARKS.indexOf(d.brand) >= 0 ? d.brand : '', name: d && d.name || '' }; }
   var PRIMARY = PRIMARY_APPS.map(function (a) { return a.id; }), APPS = PRIMARY_APPS.slice(), ALPHA = [];
   var WALLS = window.CleanFrameWallpapers || [{ id: 'misty', name: 'Nebelküste', tone: 'light', ut: { tr: 'mist', br: 'mist' }, frostVeil: .20 }];
   var ADAPTIVE_INK = window.CleanFrameAdaptiveInk || {};
@@ -331,11 +333,12 @@
     var legacyList = s.theme === 'list', h = [], recent = [], records = Array.isArray(s.appRecords) ? s.appRecords : [];
     records.slice(0, 256).forEach(function (a) {
       if (!a || !safeId(a.id) || !safeId(a.appId) || typeof a.name !== 'string' || !a.name.trim() || app(a.id)) return;
-      APPS.push({ id: a.id, appId: a.appId, name: a.name.slice(0, 160), brand: ['hbomax', 'spotify', 'tubi'].indexOf(a.brand) >= 0 ? a.brand : '', mark: ['hbomax', 'spotify', 'tubi'].indexOf(a.brand) >= 0, icon: safeIcon(a.icon) });
+      var known = describe(a.appId), brand = EXTRA_MARKS.indexOf(a.brand) >= 0 ? a.brand : known.brand;
+      APPS.push({ id: a.id, appId: a.appId, name: (known.name || a.name).slice(0, 160), brand: brand, mark: !!brand, icon: safeIcon(a.icon) });
     });
     (Array.isArray(s.home) ? s.home : Array.isArray(s.dock) ? s.dock : []).forEach(function (id) {
       if (!safeId(id) || h.indexOf(id) >= 0 || h.length >= CAP) return;
-      if (!app(id) && id.indexOf('.') > 0) APPS.push({ id: id, appId: id, name: id.split('.').pop(), mark: false });
+      if (!app(id) && id.indexOf('.') > 0) { var known = describe(id); APPS.push({ id: id, appId: id, name: known.name || id.split('.').pop(), brand: known.brand, mark: !!known.brand }); }
       if (app(id)) h.push(id);
     });
     if (!h.length) h = PRIMARY.slice();

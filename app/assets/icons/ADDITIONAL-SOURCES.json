@@ -16,5 +16,17 @@
     "source": "https://github.com/simple-icons/simple-icons/blob/develop/icons/tubi.svg",
     "licence": "CC0-1.0",
     "note": "Shape unchanged; white fill for launcher."
+  },
+  {
+    "icon": "zdf",
+    "source": "https://commons.wikimedia.org/wiki/File:ZDF_logo.svg (file version of 29 September 2022)",
+    "licence": "Public domain (Wikimedia Commons PD-textlogo: below the threshold of originality). Trademark of its owner; Commons notes possible trademark protection.",
+    "note": "Original ZDF logo is orange (#fa7d19); single path kept unchanged, Illustrator styles removed, white fill for launcher."
+  },
+  {
+    "icon": "ard",
+    "source": "https://commons.wikimedia.org/wiki/File:ARD_2019_logo.svg (file version of 19 November 2023)",
+    "licence": "Public domain (Wikimedia Commons PD-textlogo: below the threshold of originality). Trademark of its owner; Commons notes possible trademark protection.",
+    "note": "Single path kept unchanged, white fill for launcher."
   }
 ]
