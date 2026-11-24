@@ -211,5 +211,20 @@ window.CleanFrameWallpapers = [
     "listColumn": 2,
     "dockQuiet": true,
     "clockMist": true
+  },
+  {
+    "id": "lavendelfeld",
+    "name": "Lavendelfeld",
+    "src": "assets/wallpapers/lavendelfeld.jpg",
+    "thumb": "assets/wallpapers/lavendelfeld-thumb.jpg",
+    "tone": "dark",
+    "ut": {
+      "tr": "mist",
+      "br": "mist"
+    },
+    "frostVeil": 0.3,
+    "listColumn": 3,
+    "dockQuiet": true,
+    "clockMist": true
   }
 ];
