@@ -241,5 +241,20 @@ window.CleanFrameWallpapers = [
     "listColumn": 2,
     "dockQuiet": true,
     "clockMist": true
+  },
+  {
+    "id": "kathedrale",
+    "name": "Kathedrale",
+    "src": "assets/wallpapers/kathedrale.jpg",
+    "thumb": "assets/wallpapers/kathedrale-thumb.jpg",
+    "tone": "dark",
+    "ut": {
+      "tr": "mist",
+      "br": "mist"
+    },
+    "frostVeil": 0.3,
+    "listColumn": 2,
+    "dockQuiet": true,
+    "clockMist": true
   }
 ];

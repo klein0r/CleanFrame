@@ -1,5 +1,5 @@
 # Launcher wallpapers
 
-The sixteen entries in `SOURCES.json` each have a background JPEG, a thumbnail and a small blurred panel backdrop. Four registered material JPEGs per image live in `../materials/`. All derived images retain the source image's terms.
+The seventeen entries in `SOURCES.json` each have a background JPEG, a thumbnail and a small blurred panel backdrop. Four registered material JPEGs per image live in `../materials/`. All derived images retain the source image's terms.
 
 Photo pages, authors and licence observations are in [asset sources](../../../docs/asset-sources.md). Generation instructions are in [asset generation](../../../docs/assets.md). Full-size originals remain outside the repository.
