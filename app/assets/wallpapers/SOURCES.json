@@ -80,16 +80,6 @@
     "source": "https://unsplash.com/photos/wndpWTiDuT0"
   },
   {
-    "id": "golden",
-    "name": "Goldene Stunde",
-    "src": "assets/wallpapers/golden.jpg",
-    "thumb": "assets/wallpapers/golden-thumb.jpg",
-    "pos": "50% 50%",
-    "tone": "dark",
-    "credit": "Karthik Sreenivas",
-    "source": "https://unsplash.com/photos/tmtkhWbgMu8"
-  },
-  {
     "id": "summit",
     "name": "Sonnige Gipfel",
     "src": "assets/wallpapers/summit.jpg",
@@ -98,16 +88,6 @@
     "tone": "dark",
     "credit": "Rudra Gupta",
     "source": "https://unsplash.com/photos/PuTSzJJ-qyU"
-  },
-  {
-    "id": "goldcoast",
-    "name": "Gold Coast am Abend",
-    "src": "assets/wallpapers/goldcoast.jpg",
-    "thumb": "assets/wallpapers/goldcoast-thumb.jpg",
-    "pos": "50% 50%",
-    "tone": "light",
-    "credit": "City of Gold Coast",
-    "source": "https://unsplash.com/photos/YiaGblobOGI"
   },
   {
     "id": "sydney",
@@ -128,16 +108,6 @@
     "tone": "light",
     "credit": "Chris Barbalis",
     "source": "https://unsplash.com/photos/vazZtmYFgFY"
-  },
-  {
-    "id": "mint",
-    "name": "Mintwelle",
-    "src": "assets/wallpapers/mint.jpg",
-    "thumb": "assets/wallpapers/mint-thumb.jpg",
-    "pos": "50% 50%",
-    "tone": "light",
-    "credit": "MagicPattern",
-    "source": "https://unsplash.com/photos/87PP9Zd7MNo"
   },
   {
     "id": "alpine",

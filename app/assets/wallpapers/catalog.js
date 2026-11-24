@@ -123,21 +123,6 @@ window.CleanFrameWallpapers = [
     "clockMist": true
   },
   {
-    "id": "golden",
-    "name": "Goldene Stunde",
-    "src": "assets/wallpapers/golden.jpg",
-    "thumb": "assets/wallpapers/golden-thumb.jpg",
-    "tone": "dark",
-    "ut": {
-      "tr": "mist",
-      "br": "mist"
-    },
-    "frostVeil": 0.3,
-    "listColumn": 2,
-    "dockQuiet": true,
-    "clockMist": true
-  },
-  {
     "id": "summit",
     "name": "Sonnige Gipfel",
     "src": "assets/wallpapers/summit.jpg",
@@ -149,21 +134,6 @@ window.CleanFrameWallpapers = [
     },
     "frostVeil": 0.2,
     "listColumn": 0,
-    "dockQuiet": false,
-    "clockMist": false
-  },
-  {
-    "id": "goldcoast",
-    "name": "Gold Coast am Abend",
-    "src": "assets/wallpapers/goldcoast.jpg",
-    "thumb": "assets/wallpapers/goldcoast-thumb.jpg",
-    "tone": "light",
-    "ut": {
-      "tr": "mist",
-      "br": "mist"
-    },
-    "frostVeil": 0.2,
-    "listColumn": 3,
     "dockQuiet": false,
     "clockMist": false
   },
@@ -194,21 +164,6 @@ window.CleanFrameWallpapers = [
     },
     "frostVeil": 0.2,
     "listColumn": 0,
-    "dockQuiet": false,
-    "clockMist": false
-  },
-  {
-    "id": "mint",
-    "name": "Mintwelle",
-    "src": "assets/wallpapers/mint.jpg",
-    "thumb": "assets/wallpapers/mint-thumb.jpg",
-    "tone": "light",
-    "ut": {
-      "tr": "mist",
-      "br": "light"
-    },
-    "frostVeil": 0.44,
-    "listColumn": 3,
     "dockQuiet": false,
     "clockMist": false
   },

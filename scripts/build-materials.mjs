@@ -7,9 +7,9 @@ const requested = process.argv[2] ? process.argv[2].split(',') : catalogue.map(w
 if (requested.some(id => !catalogue.some(w => w.id === id))) throw Error('Unknown wallpaper');
 const destination = root + '.local/materials/builder/';
 mkdirSync(destination, { recursive: true });
-// Preserve the reviewed density of the original nine Soft surfaces.
+// Preserve the reviewed density of the original Soft surfaces that remain bundled.
 const softTint = { misty: .43303399, cove: .389543, forest: .43034609, valley: .51301798,
-  night: .46650529, peaks: .36319971, bridge: .30784841, ridge: .6, golden: .32207446 };
+  night: .46650529, peaks: .36319971, bridge: .30784841, ridge: .6 };
 const report = { recipe: 1, size: [1920, 1080], assets: [], errors: [] };
 const preview = await openPreview();
 try {
