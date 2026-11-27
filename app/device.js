@@ -1,14 +1,14 @@
 /* Public Tizen application APIs. No Mac server, network address or credentials. */
 (function () {
   'use strict';
-  var IDS = {
+  const IDS = {
     stremio: 'IkWsFHtOY9.Stremio', netflix: 'org.tizen.netflix-app',
     disneyplus: 'MCmYXNxgcu.DisneyPlus', youtube: '9Ur5IzDKqV.TizenYouTube',
     appletv: 'com.samsung.tv.aria-video', primevideo: 'org.tizen.primevideo',
     abciview: 'mWK87Xghap.ABCiview', sbs: 'OyE7OuxlUi.SBSOnDemand',
     applemusic: 'org.tizen.apple.apple-music'
   };
-  var STREAMING = ['as6cYRgkPy.Binge', '73iTZRTc34.Stan', '5b8c3eb16b.BeamCTVDev',
+  const STREAMING = ['as6cYRgkPy.Binge', '73iTZRTc34.Stan', '5b8c3eb16b.BeamCTVDev',
     'cj37Ni3qXM.HBONow', 'LBUAQX1exg.Hulu', 'gzcc4LRFBF.Peacock', 'rJyOSqC6Up.CBSAllAccess',
     'Rk72oKFsRS.OtterKidsProd', '70fRFUwYlD.OtterGAProd', 'PvWgqxV3Xa.YouTubeTV',
     'XtU8fQk2gN.ESPN', 'ZmmGjO6VKO.slingtv', 'VtuWAiZdHN.STARZPlay', 'ckfgqqzvt0.dplus',
@@ -16,15 +16,15 @@
     'KaLitts8bq.tenplaySamsungTizen', 'eYuOiOLYQX.KayoSports', 'Ne2ZsPWdKl.9NOW',
     '3KA0pm7a7V.TubiTV', 'rJeHak5zRg.Spotify', 'icp4AvUPiA.7plus',
     'yPSlpvfeTf.ZDFmediathek', 'SrAoJxGQUf.ARD', 'cg2m3QSB89.7tv'];
-  var CONSUMER_SYSTEM = ['org.tizen.browser', 'com.microsoft.copilot'];
-  var EXTRA_BRANDS = {'rJeHak5zRg.Spotify': 'spotify', '5b8c3eb16b.BeamCTVDev': 'hbomax', 'cj37Ni3qXM.HBONow': 'hbomax', '3KA0pm7a7V.TubiTV': 'tubi',
+  const CONSUMER_SYSTEM = ['org.tizen.browser', 'com.microsoft.copilot'];
+  const EXTRA_BRANDS = {'rJeHak5zRg.Spotify': 'spotify', '5b8c3eb16b.BeamCTVDev': 'hbomax', 'cj37Ni3qXM.HBONow': 'hbomax', '3KA0pm7a7V.TubiTV': 'tubi',
     'yPSlpvfeTf.ZDFmediathek': 'zdf', 'SrAoJxGQUf.ARD': 'ard', 'cg2m3QSB89.7tv': 'joyn'};
   // Shorter display names where the TV's own name is a long store title.
-  var EXTRA_NAMES = {'SrAoJxGQUf.ARD': 'ARD Mediathek', 'yPSlpvfeTf.ZDFmediathek': 'ZDF'};
-  var INTERNAL = ['adplatform.ADPlayer', 'WykOS4t4F0.cmsWebApp', '25emanual3.emanual',
+  const EXTRA_NAMES = {'SrAoJxGQUf.ARD': 'ARD Mediathek', 'yPSlpvfeTf.ZDFmediathek': 'ZDF'};
+  const INTERNAL = ['adplatform.ADPlayer', 'WykOS4t4F0.cmsWebApp', '25emanual3.emanual',
     'd0m1lV1nt2.emanual', '2022ePop01.SmartTV',
     'ZODRT12q2l.WebAccountExtension', 'ByJlgt0XeD.CastSettingsApp', 'tv6pbVMQFF.PrivacyChoices'];
-  var SELF = 'nClrkHome1.FrameHome';
+  const SELF = 'nClrkHome1.FrameHome';
   function api() { return window.tizen && window.tizen.application; }
   function selfId() {
     try { return api().getCurrentApplication().appInfo.id || SELF; }
@@ -37,23 +37,28 @@
     return { message: 'Der Fernseher konnte diese Ansicht nicht öffnen.', detail: err && (err.message || err.name) || 'Erneut versuchen oder mit der Home-Taste der Fernbedienung zu CleanFrame zurückkehren.' };
   }
   function bounded(done, timeout) {
-    var finished = false, timer = setTimeout(function () { finish({ message: 'Der Fernseher hat nicht reagiert. Bitte erneut versuchen.', timeout: true }); }, timeout || 8000);
+    let finished = false;
+    const timer = setTimeout(function () { finish({ message: 'Der Fernseher hat nicht reagiert. Bitte erneut versuchen.', timeout: true }); }, timeout || 8000);
     function finish(err, value) { if (finished) return; finished = true; clearTimeout(timer); done(err, value); }
     return finish;
   }
-  var sourceCancel = null;
+  let sourceCancel = null;
   function cancelSource() { if (sourceCancel) sourceCancel(); }
   function sources(done) {
-    var sys = window.tizen && window.tizen.systeminfo, tvw = window.tizen && window.tizen.tvwindow;
+    const sys = window.tizen && window.tizen.systeminfo;
+    const tvw = window.tizen && window.tizen.tvwindow;
     if (!sys || typeof sys.getPropertyValue !== 'function' || !tvw || typeof tvw.setSource !== 'function') { unavailable(done); return; }
-    var finish = bounded(done);
+    const finish = bounded(done);
     try {
       sys.getPropertyValue('VIDEOSOURCE', function (video) {
-        var list = [], byPort = {}, active = null;
+        const list = [];
+        const byPort = {};
+        let active = null;
         try { if (typeof tvw.getSource === 'function') active = tvw.getSource(); } catch (err) { /* Status may be unavailable while discovery still works. */ }
         function record(src, connected) {
           if (!src || src.type !== 'HDMI' || typeof src.number !== 'number' || !isFinite(src.number) || src.number < 0 || Math.floor(src.number) !== src.number) return;
-          var key = String(src.number), item = byPort[key];
+          const key = String(src.number);
+          let item = byPort[key];
           if (!item) {
             item = { number: src.number, name: 'HDMI ' + src.number, connected: false, active: !!(active && active.type === 'HDMI' && active.number === src.number), source: src };
             byPort[key] = item; list.push(item);
@@ -69,10 +74,12 @@
   }
   function setSource(port, done) {
     cancelSource();
-    var tvw = window.tizen && window.tizen.tvwindow, app = api(), finished = false;
+    const tvw = window.tizen && window.tizen.tvwindow;
+    const app = api();
+    let finished = false;
     if (typeof port !== 'number' || !isFinite(port) || port < 0 || Math.floor(port) !== port) { done({ message: 'Dieser HDMI-Eingang ist nicht verfügbar.' }); return; }
     if (!tvw || typeof tvw.setSource !== 'function' || !app || typeof app.launch !== 'function') { unavailable(done); return; }
-    var timer = setTimeout(function () { finish({ message: 'Der Fernseher hat nicht reagiert. Bitte erneut versuchen.' }); }, 8000);
+    const timer = setTimeout(function () { finish({ message: 'Der Fernseher hat nicht reagiert. Bitte erneut versuchen.' }); }, 8000);
     function finish(err, value) {
       if (finished) return;
       finished = true; clearTimeout(timer);
@@ -84,7 +91,7 @@
     sources(function (err, list) {
       if (finished) return;
       if (err) { finish(err); return; }
-      var input = null;
+      let input = null;
       list.some(function (item) { if (item.number === port) { input = item; return true; } return false; });
       if (!input) { finish({ message: 'Dieser HDMI-Eingang ist nicht mehr verfügbar.' }); return; }
       try {
@@ -102,7 +109,7 @@
   }
   function launchApp(id, done) {
     if (!api()) { unavailable(done); return; }
-    var finish = bounded(done);
+    const finish = bounded(done);
     try { api().launch(id, function () { finish(null); }, function (err) { finish(failure(err)); }); }
     catch (err) { finish(failure(err)); }
   }
@@ -112,10 +119,10 @@
   }
   function art(done) {
     if (!api()) { unavailable(done); return; }
-    var finish = bounded(done);
+    const finish = bounded(done);
     try {
-      var data = [new tizen.ApplicationControlData('mode', ['fullscreen']), new tizen.ApplicationControlData('requester', ['mobile'])];
-      var control = new tizen.ApplicationControl('http://tizen.org/appcontrol/operation/default', null, null, null, data);
+      const data = [new tizen.ApplicationControlData('mode', ['fullscreen']), new tizen.ApplicationControlData('requester', ['mobile'])];
+      const control = new tizen.ApplicationControl('http://tizen.org/appcontrol/operation/default', null, null, null, data);
       api().launchAppControl(control, 'org.tizen.art-app', function () { finish(null); }, function (err) { finish(failure(err)); });
     } catch (err) { finish(failure(err)); }
   }
@@ -126,14 +133,14 @@
      when the first launch is refused, never after a timeout, so two menus cannot both open. */
   function platformMajor() {
     try {
-      var sys = window.tizen && window.tizen.systeminfo;
-      var major = sys && typeof sys.getCapability === 'function' ? parseInt(String(sys.getCapability('http://tizen.org/feature/platform.version')), 10) : 0;
+      const sys = window.tizen && window.tizen.systeminfo;
+      const major = sys && typeof sys.getCapability === 'function' ? parseInt(String(sys.getCapability('http://tizen.org/feature/platform.version')), 10) : 0;
       return major > 0 ? major : 0;
     } catch (err) { return 0; }
   }
   function settings(done) {
-    var major = platformMajor();
-    var ids = major && major < 7 ? ['org.tizen.menu', 'com.samsung.tv.coba.setting'] : ['com.samsung.tv.coba.setting', 'org.tizen.menu'];
+    const major = platformMajor();
+    const ids = major && major < 7 ? ['org.tizen.menu', 'com.samsung.tv.coba.setting'] : ['com.samsung.tv.coba.setting', 'org.tizen.menu'];
     launchApp(ids[0], function (err) {
       if (err && !err.timeout && api()) launchApp(ids[1], done);
       else done(err);
@@ -142,14 +149,18 @@
   function apps(done) {
     if (!api()) { unavailable(done); return; }
     // Large installed catalogues can take longer than a launch response.
-    var finish = bounded(done, 20000);
+    const finish = bounded(done, 20000);
     try {
       api().getAppsInfo(function (list) {
-        var known = {}, seen = {}, result = [], self = selfId();
+        const known = {};
+        const seen = {};
+        const result = [];
+        const self = selfId();
         Object.keys(IDS).forEach(function (brand) { known[IDS[brand]] = brand; });
         list.forEach(function (a) {
-          var primary = !!known[a.id], stream = STREAMING.indexOf(a.id) >= 0;
-          var consumer = /^[A-Za-z0-9]{10}\.[A-Za-z0-9_-]+$/.test(a.id) || CONSUMER_SYSTEM.indexOf(a.id) >= 0;
+          const primary = !!known[a.id];
+          const stream = STREAMING.indexOf(a.id) >= 0;
+          const consumer = /^[A-Za-z0-9]{10}\.[A-Za-z0-9_-]+$/.test(a.id) || CONSUMER_SYSTEM.indexOf(a.id) >= 0;
           if (a.id === self || INTERNAL.indexOf(a.id) >= 0 || seen[a.id] || !a.name || (!primary && !stream && (!a.show || !consumer))) return;
           if (!primary && /(?:service|worker|preview|promotion|plugin|launcher|test|sdk|^ep[ -]|factory|daemon)/i.test(a.name + ' ' + a.id)) return;
           if (/-dummy$/.test(a.id) || a.id === 'com.samsung.tv.cobalt-yt') return;

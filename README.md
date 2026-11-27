@@ -44,7 +44,7 @@ Open this repo in a local coding agent and give it a bounded change:
 Read AGENTS.md, docs/development.md and docs/interaction-behaviour.md.
 Help me adapt CleanFrame. Start with the public-font browser preview.
 My first change is: <describe one change>.
-Preserve remote navigation, saved preferences and the ES5 runtime.
+Preserve remote navigation, saved preferences and the ES5 runtime (with `let`/`const`).
 Run the source checks and relevant browser checks. Show the result.
 This task is browser-only: do not connect to a TV, sign or install a
 package, or change Home/startup settings.

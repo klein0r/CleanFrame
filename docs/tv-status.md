@@ -12,7 +12,7 @@ Reports from other owners are listed separately in [TV compatibility evidence](c
 | Firmware | 2130.0; displayed firmware string T-PTMDUABC-0090-2130.0 |
 | OS and architecture | Tizen 9.0.0, ARMv7 / 32-bit ARM, confirmed by developer capability and native probe |
 | Native helper environment | SDK user UID 901, .NET 6 runtime and required native libraries confirmed on this TV |
-| Web engine | Exact Chromium/WebKit version has not been recorded; keep runtime ES5-compatible |
+| Web engine | Exact Chromium/WebKit version has not been recorded; keep runtime ES5-compatible apart from `let`/`const` |
 
 Developer Mode is enabled. The developer connection needed a full mains power cycle after enabling it. Network address, device identifier, signing material and diagnostic dumps are private local configuration.
 
